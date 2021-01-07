@@ -34,7 +34,7 @@ Ensure the version at the to of `Makefile` is correct than run:
 ```bash
 make publish
 git tag theVersionFromTheMakefile
-git push --all
+git push --tags
 ```
 
 ## Need help?
