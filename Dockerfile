@@ -21,8 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-
-FROM adoptopenjdk/openjdk11:x86_64-debian-jdk-11.0.9_11.1
+FROM adoptopenjdk/openjdk11:x86_64-debian-jdk-11.0.9.1_1
 
 ENV DOCKER_VERSION=19.03.8 \
     DOCKER_CHANNEL=stable \
