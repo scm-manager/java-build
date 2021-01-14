@@ -67,6 +67,8 @@ RUN set -eux; \
  # clear apt caching
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
- # create jenkins passwd entries, because some commands fail if there is no entry for the uid
- # we create multiple entries, because we do not know the uid of the jenkins user
- && for i in $(seq 1000 1010); do useradd -u ${i} -s /bin/bash -m "jenkins${i}"; done
+ # create jenkins passwd entry, because some commands fail if there is no entry for the uid
+ # we create user and groups which mach our ci environment
+ && groupadd -g 998 docker \
+ && groupadd -g 1002 jenkins \
+ && useradd -u 1001 -g 1002 -G 998 -s /bin/bash -m jenkins
