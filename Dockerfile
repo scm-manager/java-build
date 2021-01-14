@@ -66,4 +66,7 @@ RUN set -eux; \
  && rm -f docker-${DOCKER_VERSION}.tgz docker-${DOCKER_VERSION}.sha256sum \
  # clear apt caching
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/* \
+ # create jenkins passwd entries, because some commands fail if there is no entry for the uid
+ # we create multiple entries, because we do not know the uid of the jenkins user
+ && for i in $(seq 1000 1010); do useradd -u ${i} -s /bin/bash -m "jenkins${i}"; done
