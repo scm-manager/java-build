@@ -23,9 +23,9 @@
 #
 FROM eclipse-temurin:11.0.15_10-jdk
 
-ENV DOCKER_VERSION=19.03.8 \
+ENV DOCKER_VERSION=20.10.14 \
     DOCKER_CHANNEL=stable \
-    DOCKER_CHECKSUM=7f4115dc6a3c19c917f8b9664d7b51c904def1c984e082c4600097433323cf6f
+    DOCKER_CHECKSUM=7ca4aeeed86619909ae584ce3405da3766d495f98904ffbd9d859add26b83af5
 
 # fake modprobe
 COPY modprobe.sh /usr/local/bin/modprobe
