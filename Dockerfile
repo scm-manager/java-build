@@ -63,6 +63,7 @@ RUN set -eux; \
  && echo "${BUILDX_CHECKSUM} docker-buildx" > docker-buildx.sha256sum \
  && sha256sum -c docker-buildx.sha256sum \
  && mv docker-buildx /usr/local/lib/docker/cli-plugins/ \
+ && chmod +x /usr/local/lib/docker/cli-plugins/docker-buildx \
  # extract docker and install it to /usr/local/bin
  && tar --extract \
     		--file docker-${DOCKER_VERSION}.tgz \
