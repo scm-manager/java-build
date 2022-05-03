@@ -25,7 +25,9 @@ FROM eclipse-temurin:11.0.15_10-jdk
 
 ENV DOCKER_VERSION=20.10.14 \
     DOCKER_CHANNEL=stable \
-    DOCKER_CHECKSUM=7ca4aeeed86619909ae584ce3405da3766d495f98904ffbd9d859add26b83af5
+    DOCKER_CHECKSUM=7ca4aeeed86619909ae584ce3405da3766d495f98904ffbd9d859add26b83af5\
+    BUILDX_VERSION=0.8.2\
+    BUILDX_CHECKSUM=c64de4f3c30f7a73ff9db637660c7aa0f00234368105b0a09fa8e24eebe910c3
 
 # fake modprobe
 COPY modprobe.sh /usr/local/bin/modprobe
@@ -55,6 +57,12 @@ RUN set -eux; \
  && curl -o docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/${DOCKER_CHANNEL}/x86_64/docker-${DOCKER_VERSION}.tgz \
  && echo "${DOCKER_CHECKSUM} docker-${DOCKER_VERSION}.tgz" > docker-${DOCKER_VERSION}.sha256sum \
  && sha256sum -c docker-${DOCKER_VERSION}.sha256sum \
+ # download buildx
+ && mkdir -p /usr/local/lib/docker/cli-plugins \
+ && curl -L -o docker-buildx https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-amd64 \
+ && echo "${BUILDX_CHECKSUM} docker-buildx" > docker-buildx.sha256sum \
+ && sha256sum -c docker-buildx.sha256sum \
+ && mv docker-buildx /usr/local/lib/docker/cli-plugins/ \
  # extract docker and install it to /usr/local/bin
  && tar --extract \
     		--file docker-${DOCKER_VERSION}.tgz \
@@ -63,7 +71,7 @@ RUN set -eux; \
  # verify docker installation
  && docker --version \
  # remove temporary files
- && rm -f docker-${DOCKER_VERSION}.tgz docker-${DOCKER_VERSION}.sha256sum \
+ && rm -f docker-${DOCKER_VERSION}.tgz docker-${DOCKER_VERSION}.sha256sum docker-buildx.sha256sum \
  # clear apt caching
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
