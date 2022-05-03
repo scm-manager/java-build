@@ -24,18 +24,12 @@ Note: `tag` must be replaced with a [available tag](https://hub.docker.com/r/scm
 In order to build the image just call:
 
 ```bash
-make build
+docker build -t scmmanager/java-build
 ```
 
 ## Release
 
-Ensure the version at the to of `Makefile` is correct than run:
-
-```bash
-make publish
-git tag theVersionFromTheMakefile
-git push --tags
-```
+Just push a release branch with the new version (e.g.: `release/11.0.15_10`).
 
 ## Need help?
 
