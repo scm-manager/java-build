@@ -24,13 +24,15 @@ pipeline {
         sh "git merge --ff-only ${env.BRANCH_NAME}"
 
         // set tag
-        tag version
+        tag releaseVersion
       }
     }
 
     stage('Build') {
       steps {
-        sh "docker build -t scmmanager/java-build:${version} ."
+        script {
+          image = docker.build("scmmanager/java-build")
+        }
       }
     }
 
@@ -39,8 +41,11 @@ pipeline {
         branch pattern: 'release/*', comparator: 'GLOB'
       }
       steps {
-        withRegistry('', 'hub.docker.com-cesmarvin') {
-          sh "docker push scmmanager/java-build:${version}"
+        script {
+          docker.withRegistry('', 'hub.docker.com-cesmarvin') {
+            image.push(releaseVersion)
+            image.push("latest")
+          }
         }
       }
     }
@@ -61,7 +66,9 @@ pipeline {
 
 }
 
-String getVersion() {
+def image
+
+String getReleaseVersion() {
   if (env.BRANCH_NAME.startsWith("release/")) {
     return env.BRANCH_NAME.substring("release/".length())
   }
