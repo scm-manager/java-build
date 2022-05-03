@@ -50,7 +50,6 @@ pipeline {
         branch pattern: 'release/*', comparator: 'GLOB'
       }
       steps {
-        // merge main in to develop
         sh 'git checkout main'
 
         // push changes back to remote repository
