@@ -19,6 +19,7 @@ pipeline {
         sh 'git fetch --all'
 
         // checkout, reset and merge
+        sh "git checkout ${env.BRANCH_NAME}"
         sh 'git checkout main'
         sh 'git reset --hard origin/main'
         sh "git merge --ff-only ${env.BRANCH_NAME}"
