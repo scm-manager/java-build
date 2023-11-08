@@ -3,7 +3,7 @@ pipeline {
 
   agent {
     node {
-      label 'docker'
+      label 'scmm'
     }
   }
 
@@ -15,7 +15,7 @@ pipeline {
       }
       steps {
         // fetch all remotes from origin
-        sh 'git config "remote.origin.fetch" "+refs/heads/*:refs/remotes/origin/*"'
+        sh 'git config --replace-all "remote.origin.fetch" "+refs/heads/*:refs/remotes/origin/*"'
         sh 'git fetch --all'
 
         // checkout, reset and merge
@@ -42,7 +42,7 @@ pipeline {
       }
       steps {
         script {
-          docker.withRegistry('', 'hub.docker.com-cesmarvin') {
+          docker.withRegistry('', 'cesmarvin-dockerhub-access-token') {
             image.push(releaseVersion)
             image.push("latest")
           }
@@ -58,8 +58,8 @@ pipeline {
         sh 'git checkout main'
 
         // push changes back to remote repository
-        authGit 'cesmarvin-github', 'push origin main --tags'
-        authGit 'cesmarvin-github', "push origin :${env.BRANCH_NAME}"
+        authGit 'SCM-Manager', 'push origin main --tags'
+        authGit 'SCM-Manager', "push origin :${env.BRANCH_NAME}"
       }
     }
   }
