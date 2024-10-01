@@ -63,6 +63,19 @@ pipeline {
         authGit 'SCM-Manager', "push origin :${env.BRANCH_NAME}"
       }
     }
+    
+    stage('Update GitHub') {
+      when {
+        branch pattern: 'release/*', comparator: 'GLOB'
+	    expression { return isBuildSuccess() }
+      }
+      steps {
+        sh 'git checkout main'
+        
+        // push changes to GitHub
+        authGit 'cesmarvin', "push -f https://github.com/scm-manager/babel-preset main --tags"
+      }
+    }
   }
 
 }
@@ -79,6 +92,10 @@ String getReleaseVersion() {
 void tag(String version) {
   String message = "release version ${version}"
   sh "git -c user.name='CES Marvin' -c user.email='cesmarvin@cloudogu.com' tag -m '${message}' ${version}"
+}
+
+boolean isBuildSuccess() {
+  return currentBuild.result == null || currentBuild.result == 'SUCCESS'
 }
 
 void authGit(String credentials, String command) {
