@@ -73,7 +73,7 @@ pipeline {
         sh 'git checkout main'
         
         // push changes to GitHub
-        authGit 'cesmarvin', "push -f https://github.com/scm-manager/babel-preset main --tags"
+        authGit 'cesmarvin', "push -f https://github.com/scm-manager/java-build main --tags"
       }
     }
   }
