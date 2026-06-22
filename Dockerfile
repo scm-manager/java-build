@@ -70,6 +70,6 @@ RUN set -eux; \
  && rm -rf /var/lib/apt/lists/* \
  # create jenkins passwd entry, because some commands fail if there is no entry for the uid
  # we create user and groups which mach our ci environment
- && groupadd -g 998 docker \
+ && groupadd -g 988 docker \
  && groupadd -g 1002 jenkins \
- && useradd -u 1001 -g 1002 -G 998 -s /bin/bash -m jenkins
+ && useradd -u 1001 -g 1002 -G 988 -s /bin/bash -m jenkins
