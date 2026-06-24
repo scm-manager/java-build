@@ -72,4 +72,4 @@ RUN set -eux; \
  # we create user and groups which mach our ci environment
  && groupadd -g 988 docker \
  && groupadd -g 1002 jenkins \
- && useradd -u 1001 -g 1002 -G 988 -s /bin/bash -m jenkins
+ && useradd -u 1002 -g 1002 -G 988 -s /bin/bash -m jenkins
