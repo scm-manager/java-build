@@ -13,13 +13,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 #
-FROM eclipse-temurin:17.0.9_9-jdk
+FROM eclipse-temurin:25.0.3_9-jdk
 
-ENV DOCKER_VERSION=20.10.14 \
+ENV DOCKER_VERSION=29.6.1 \
     DOCKER_CHANNEL=stable \
-    DOCKER_CHECKSUM=7ca4aeeed86619909ae584ce3405da3766d495f98904ffbd9d859add26b83af5\
-    BUILDX_VERSION=0.8.2\
-    BUILDX_CHECKSUM=c64de4f3c30f7a73ff9db637660c7aa0f00234368105b0a09fa8e24eebe910c3
+    DOCKER_CHECKSUM=b0df4a43a98d7ecb708acbdb5a34a3416e13b6e39bcbbdf296f51f0f3442b29f \
+    BUILDX_VERSION=0.35.0\
+    BUILDX_CHECKSUM=d41ece72044243b4f58b343441ae37446d9c29a7d6b5e11c61847bbcf8f7dfda
 
 # fake modprobe
 COPY modprobe.sh /usr/local/bin/modprobe
@@ -30,18 +30,14 @@ RUN set -eux; \
  && apt-get install --no-install-recommends -y \
     # mercurial is requried for integration tests of the scm-hg-plugin
     mercurial \
-    # git is required by yarn install of scm-ui
     git \
-    # the following dependencies are required for cypress tests and are copied from
-    # https://github.com/cypress-io/cypress-docker-images/blob/master/base/12.18.3/Dockerfile
-    libgtk2.0-0 \
+    curl \
     libgtk-3-0 \
     libnotify-dev \
-    libgconf-2-4 \
     libgbm-dev \
     libnss3 \
     libxss1 \
-    libasound2 \
+    libasound2t64 \
     libxtst6 \
     xauth \
     xvfb \
