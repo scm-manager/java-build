@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see https://www.gnu.org/licenses/.
 #
-FROM eclipse-temurin:25.0.3_9-jdk
+FROM eclipse-temurin:25.0.3_9-jdk-noble
 
 ENV DOCKER_VERSION=29.6.1 \
     DOCKER_CHANNEL=stable \
